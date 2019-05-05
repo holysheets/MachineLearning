@@ -1,0 +1,13 @@
+To run perceptron:
+
+python perceptron.py --train bank-note/train.csv --test bank-note/test.csv --T 10 --r .05 
+
+args: 
+--T specifies the number of epochs
+--r specifies the learning rate
+--train specifies the training set
+--test specifies the test set
+
+optional args:
+--voted specifies voted perceptron algorithm
+--average specifies averaged perceptron algorithm 
