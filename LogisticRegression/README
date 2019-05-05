@@ -1,0 +1,14 @@
+To run backprop:
+
+python backprop.py --train bank-note/train.csv --test bank-note/test.csv --T 10 --r .5 --d 1 --width 50
+
+args: 
+--T specifies the number of epochs
+--r specifies the learning rate
+--train specifies the training set
+--test specifies the test set
+--d specifies d
+--width gives the width of hidden layers
+
+optional args:
+--zero initializes weights to zero
