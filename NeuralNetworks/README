@@ -1,0 +1,14 @@
+To run tensor:
+
+python tensor.py --train bank-note/train.csv --test bank-note/test.csv --T 10 --r .5 --d 1 --width 50 --depth 3 --RELU
+
+args: 
+--T specifies the number of epochs
+--r specifies the learning rate
+--train specifies the training set
+--test specifies the test set
+--d specifies d
+--width gives the width of hidden layers
+--depth 3,5,9 gives the number of hidden layers
+--tanh sets the activation function to be tanh
+--RELU sets the activation function to be RELU
