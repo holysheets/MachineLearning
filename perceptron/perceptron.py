@@ -1,7 +1,4 @@
 #Theresa Sheets Implimentation of the Perceptron ALgorithm
-#CMSC 6350 HW 3
-#March 10, 2019
-
 
 import argparse, sys, math, random, numpy
 
@@ -115,12 +112,9 @@ def fixData(data):
         label=float(x[-1])
         x[-1]=1
         if label==0:
-            #print('zero')
             x.append(-1.0)
         if label==1:
-            #print('one')
             x.append(1.0)
-    #import pdb; pdb.set_trace()
     return data
 
 
