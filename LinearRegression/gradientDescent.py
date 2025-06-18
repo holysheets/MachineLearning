@@ -1,8 +1,4 @@
 #Theresa Sheets Gradient Descent Algorithm
-#Feb 26, 2019
-#CMSC 5350/6350
-#For Homework 2
-
 
 import argparse, sys, math, random
 
@@ -70,7 +66,6 @@ def stochastic_update(x, r, w, b):
 
 
 def train_set(data,testData):
-    #import pdb; pdb.set_trace()
     weight=[0 for x in range(0,len(data[1])-1)]
     b=0
     r=args.r
@@ -87,7 +82,6 @@ def train_set(data,testData):
             for j in range(len(weight)):
                 difference[j]=weight[j]-newW[j]
             weightErr=dotProduct(difference,difference)
-            #print(weightErr)
             weight=newW
             b=newB
             currentCost=cost(data,weight,b)
@@ -102,7 +96,6 @@ def train_set(data,testData):
             for x in data:
                 (newW, newB)=stochastic_update(x, r, weight, b)
                 costErr=abs(cost(data,weight,b)-cost(data,newW,newB))
-                #print(costErr)
                 weight=newW
                 b=newB
                 currentCost=cost(data,weight,b)
