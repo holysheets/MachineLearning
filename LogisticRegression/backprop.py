@@ -111,7 +111,6 @@ def train_set(data):
             outputs=forward_prop(network,x)
             expected=[0 for i in range(numOutput)]
             expected[x[-1]]=1
-            #import pdb; pdb.set_trace()
             error_sum=error_sum+sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
             back_prop(network, expected)
             updateWeights(network,x)
@@ -134,18 +133,9 @@ def test_set(data, network):
 #adds bias weight before the label
 def fixData(data):
     for x in data:
-        #label=float(x[-1])
-        #x[-1]=1
-        #if label==0:
-            #print('zero')
-            #x.append(-1.0)
-        #if label==1:
-            #print('one')
-            #x.append(1.0)
         for i in range(len(x)-1):
             x[i]=float(x[i])
         x[-1]=int(x[-1])
-    #import pdb; pdb.set_trace()
     return data
 
 
