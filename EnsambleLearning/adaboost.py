@@ -1,7 +1,4 @@
-#Theresa Sheets ID3 Algorithm Implimentation
-#Feb 10, 2019
-#CMSC 5350/6350
-#For Homework 1
+#Theresa Sheets ID3 Implimentation
 
 
 import argparse, sys, math
@@ -49,11 +46,9 @@ class Node(object):
         print("This node is at depth:"+str(self.node_maxDepth))
         print("This node was created by branching on the attribute "+(self.key_attr)+" and has value "+str(self.value)+" of that attribute")
         print("There are "+str(len(self.data))+" training data entries at this node.")
-        #import pdb; pdb.set_trace()
         print("The label of this node is "+ str(self.label))
         print("This node has entropy: "+str(self.node_entropy))
         print("This node has: "+ str(len(self.children))+ " children\n")
-        #import pdb; pdb.set_trace()
         for x in self.children:
             x.print_tree()
 
@@ -65,7 +60,6 @@ class ID3Tree(object):
         self.attributes = attributes # a list of x values in the column should just be numbers
         self.labels = labels #(unacceptable, acceptable, good, verygood)
         self.root = None
-        #self.depth=0
         self.max_depth = maxDepth
         self.value=value
         self.node_attribute=key_attribute
@@ -80,8 +74,6 @@ class ID3Tree(object):
         for attribute in self.attributes:
             best_attribute[idx]=self.gain(attribute,D)
             idx+=1
-        #import pdb; pdb.set_trace()
-        #print(best_attribute)
         best_split = max(best_attribute)
         idx=0
         for gain in best_attribute:
@@ -89,7 +81,6 @@ class ID3Tree(object):
                 break
             idx+=1
         best_index = idx
-        #print(self.attributes[best_index]+' at depth: '+str(self.max_depth))
         return self.attributes[best_index]
 
 
@@ -172,32 +163,13 @@ class ID3Tree(object):
     #calculates the entropy of a set
     def entropy(self, myset,mysetD):
         dataLength=len(myset)
-        #if args.me:
-        #    majority_error=0
-        #    if dataLength==0:
-        #        return majority_error
-        #    majority=self.max_label(myset)
-        #    majority_count=self.number_labels(majority, myset)
-        #    majority_error=1-(majority_count / float(dataLength))
-        #    return majority_error
-        #if args.gini:
-        #    gini=1
-        #    if dataLength==0:
-        #        return gini
-        #    for x in self.labels:
-        #        p=self.number_labels(x,myset) / float(dataLength)
-        #        gini-=p*p
-        #    return gini
         entropy=0
         if dataLength==0:
             return entropy
         for x in self.labels:
-            #import pdb; pdb.set_trace()
-            #p=self.number_labels(x,myset,mysetD) / float(dataLength)
             p=self.number_labels(x,myset,mysetD)/float(sum(mysetD))
             if p!=0:
                 entropy-=p*math.log(p,2)
-        #print("Entropy is ", str(entropy))
         return entropy
 
 
@@ -239,7 +211,6 @@ class ID3Tree(object):
     def print_tree(self):
         if (self.root):
             x=self.root
-            #import pdb; pdb.set_trace()
             x.print_node()
 
 
@@ -274,7 +245,6 @@ class ID3Tree(object):
             #print("median")
             for attr in self.attributes:
                 attribute_values=self.get_attribute_values(attr)
-                #print(attribute_values)
                 attr_index=self.attributes.index(attr)
                 if len(attribute_values)==0:
                     #print(str(attr_index))
@@ -285,14 +255,11 @@ class ID3Tree(object):
                     medians.append(medianValue)
                     for x in self.data:
                         if float(x[attr_index])>medianValue:
-                            #print("reassign")
                             x[attr_index]='high'
                         else:
                             x[attr_index]='low'
-                        #import pdb; pdb.set_trace()
                 else:
                     #replace all unknown with most common value
-                    #import pdb; pdb.set_trace()
                     if args.unknowns:
                         mostCommonValue=self.most_common_attr_value(attr)
                         mostCommonValues.append(mostCommonValue)
@@ -302,7 +269,6 @@ class ID3Tree(object):
 
             self.at_root=False
 
-        #import pdb; pdb.set_trace()
         key_attribute=self.best_split_set(D)
         ( all_match, label)=self.all_match_labels()
         entropy=self.entropy(self.data,D)
@@ -314,12 +280,10 @@ class ID3Tree(object):
         else:
             if ((not all_match) and (self.max_depth>0)):
                 #self.max_depth= self.max_depth - 1
-                #import pdb; pdb.set_trace()
                 attribute_values = self.get_attribute_values(key_attribute)
                 #if not attribute_values:
 
                 for v in attribute_values:
-                    #import pdb; pdb.set_trace()
                     #1. add a new tree branch corresponding to A=v
                     subset_v=[]
                     subset_v_D=[]
@@ -339,7 +303,6 @@ class ID3Tree(object):
             self.root=root_node
             self.root.value=self.value
             self.root.key_attr=self.node_attribute
-            #import pdb; pdb.set_trace()
             return (root_node, medians, mostCommonValues)
 
 
@@ -348,7 +311,6 @@ class ID3Tree(object):
         label=self.root.label
         for child in self.root.children:
             #find attribute and attribute value for that node
-            #import pdb; pdb.set_trace()
             key_attribute=child.root.key_attr
             idx=0
             for attribute in self.attributes:
@@ -359,9 +321,7 @@ class ID3Tree(object):
 
             #if attribute value matches call predict on that node
             if x[attribute_index]==attribute_value:
-                #print("predict")
                 label=child.predict_label(x)
-        #print("label")
         return label
 
 
@@ -374,13 +334,11 @@ def train_set( data , D, numericalHandled,maxDepth):
         labels=['yes','no']
     tree=ID3Tree(data,attributes,labels,maxDepth, "all", "base", D)
     (rootOfTree, medians, mostCommonValues)=tree.driver_script(numericalHandled)
-    #tree.print_tree()
     return (tree, medians, mostCommonValues)
 
 
 #fixes the numerical values in the test set
 def fixNumerical(data, numericalAttributes, medianValues):
-    #import pdb; pdb.set_trace()
     for i in range(len(numericalAttributes)):
         for x in data:
             if x[numericalAttributes[i]]>medianValues[i]:
@@ -392,7 +350,6 @@ def fixNumerical(data, numericalAttributes, medianValues):
 def test_set( data, tree, medians, mostCommonValues):
     correct_predictions=0
     length=len(data)
-    #import pdb; pdb.set_trace()
     if args.bank:
         dataSet='bank'
         numericalAttributes=[0, 5, 9, 11, 12, 13, 14]
@@ -402,7 +359,6 @@ def test_set( data, tree, medians, mostCommonValues):
             for i in range(len(mostCommonValues)):
                 if x[i]=='unknown':
                     x[i]=mostCommonValues[i]
-    #import pdb; pdb.set_trace()
     for x in data:
         label=tree.predict_label(x)
         if label==x[-1]:
@@ -414,7 +370,6 @@ def test_set( data, tree, medians, mostCommonValues):
 
 #calculates error for adabost
 def errorT(data, tree,D):
-    #import pdb; pdb.set_trace()
     err=0
     idx=0
     for x in data:
@@ -422,12 +377,10 @@ def errorT(data, tree,D):
         if not (label==x[-1]):
             err+=D[idx]
         idx+=1
-    #print("Error: "+str(err))
     return err
 
 def testAdaboost(hypothesis, alphas, data, testData):
     correct_predictions=0
-    #import pdb; pdb.set_trace()
     for x in data:
         Hfinal=0
         for i in range(len(hypothesis)):
@@ -456,13 +409,8 @@ def testAdaboost(hypothesis, alphas, data, testData):
             correct_predictions+=1
         if ((HfinalTest<0) and (x[-1]=='no')):
             correct_predictions+=1
-    #print(correct_predictions)
-    #print(len(testData))
     HfinalTest=correct_predictions/float(len(testData))
     return(Hfinal, HfinalTest)
-
-
-
 
 
 def adaboost(data,T,testData):
@@ -502,8 +450,6 @@ def adaboost(data,T,testData):
         Z=sum(D)
         (tree, medians, mostCommonValues)=train_set(data,D,handled, maxDepth)
         hypothesis.append(tree)
-        #print("D total: "+str(sum(D)))
-        #print("Z: "+str(Z))
     (Hfinal, HfinalTest)=testAdaboost(hypothesis, alphas, data, testData)
     print(testError)
     print(trainingError)
