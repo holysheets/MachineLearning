@@ -1,7 +1,4 @@
 #Theresa Sheets ID3 Algorithm Implimentation
-#Feb 10, 2019
-#CMSC 5350/6350
-#For Homework 1
 
 
 import argparse, sys, math
@@ -48,11 +45,9 @@ class Node(object):
         print("This node is at depth:"+str(self.node_maxDepth))
         print("This node was created by branching on the attribute "+(self.key_attr)+" and has value "+str(self.value)+" of that attribute")
         print("There are "+str(len(self.data))+" training data entries at this node.")
-        #import pdb; pdb.set_trace()
         print("The label of this node is "+ str(self.label))
         print("This node has entropy: "+str(self.node_entropy))
         print("This node has: "+ str(len(self.children))+ " children\n")
-        #import pdb; pdb.set_trace()
         for x in self.children:
             x.print_tree()
 
@@ -64,7 +59,6 @@ class ID3Tree(object):
         self.attributes = attributes # a list of x values in the column should just be numbers
         self.labels = labels #(unacceptable, acceptable, good, verygood)
         self.root = None
-        #self.depth=0
         self.max_depth = maxDepth
         self.value=value
         self.node_attribute=key_attribute
@@ -78,8 +72,6 @@ class ID3Tree(object):
         for attribute in self.attributes:
             best_attribute[idx]=self.gain(attribute)
             idx+=1
-        #import pdb; pdb.set_trace()
-        #print(best_attribute)
         best_split = max(best_attribute)
         idx=0
         for gain in best_attribute:
@@ -87,7 +79,6 @@ class ID3Tree(object):
                 break
             idx+=1
         best_index = idx
-        #print(self.attributes[best_index]+' at depth: '+str(self.max_depth))
         return self.attributes[best_index]
 
 
@@ -190,7 +181,6 @@ class ID3Tree(object):
             p=self.number_labels(x,myset) / float(dataLength)
             if p!=0:
                 entropy-=p*math.log(p,2)
-        #print("Entropy is ", str(entropy))
         return entropy
 
 
@@ -258,9 +248,6 @@ class ID3Tree(object):
             attr_count.remove(max_val)
             max_val=max(attr_count)
             max_index=attr_count.index(max_val)
-        #print(attr_count)
-        #print(attribute_values)
-        #print(attribute_values[max_index])
         return attribute_values[max_index]
 
 
@@ -271,7 +258,6 @@ class ID3Tree(object):
         if self.max_depth==args.maxDepth:
             self.at_root=True
         if self.at_root:
-            #print("median")
             for attr in self.attributes:
                 attribute_values=self.get_attribute_values(attr)
                 #print(attribute_values)
@@ -285,14 +271,11 @@ class ID3Tree(object):
                     medians.append(medianValue)
                     for x in self.data:
                         if float(x[attr_index])>medianValue:
-                            #print("reassign")
                             x[attr_index]='high'
                         else:
                             x[attr_index]='low'
-                        #import pdb; pdb.set_trace()
                 else:
                     #replace all unknown with most common value
-                    #import pdb; pdb.set_trace()
                     if args.unknowns:
                         mostCommonValue=self.most_common_attr_value(attr)
                         mostCommonValues.append(mostCommonValue)
@@ -302,7 +285,6 @@ class ID3Tree(object):
 
             self.at_root=False
 
-        #import pdb; pdb.set_trace()
         key_attribute=self.best_split_set()
         ( all_match, label)=self.all_match_labels()
         entropy=self.entropy(self.data)
@@ -314,22 +296,16 @@ class ID3Tree(object):
         else:
             if ((not all_match) and (self.max_depth>0)):
                 #self.max_depth= self.max_depth - 1
-                #import pdb; pdb.set_trace()
                 attribute_values = self.get_attribute_values(key_attribute)
                 #if not attribute_values:
 
                 for v in attribute_values:
-                    #import pdb; pdb.set_trace()
                     #1. add a new tree branch corresponding to A=v
                     subset_v=[]
                     for data in self.data:
                         if data[self.attributes.index(key_attribute)]==v:
                             subset_v.append(data)
                     if len(subset_v)!=0:
-                        #print("child with key_attribute: "+key_attribute+" and value "+v)
-                        #print(str(len(subset_v)))
-                        #print(str(self.max_depth-1))
-                        #import pdb; pdb.set_trace()
                         subtree=ID3Tree(subset_v,self.attributes, self.labels, self.max_depth-1,v,key_attribute)
                         root_node.children.append(subtree)
                         subtree.driver_script()
@@ -339,7 +315,6 @@ class ID3Tree(object):
             self.root=root_node
             self.root.value=self.value
             self.root.key_attr=self.node_attribute
-            #import pdb; pdb.set_trace()
             return (root_node, medians, mostCommonValues)
 
 
@@ -348,7 +323,6 @@ class ID3Tree(object):
         label=self.root.label
         for child in self.root.children:
             #find attribute and attribute value for that node
-            #import pdb; pdb.set_trace()
             key_attribute=child.root.key_attr
             idx=0
             for attribute in self.attributes:
@@ -359,9 +333,7 @@ class ID3Tree(object):
 
             #if attribute value matches call predict on that node
             if x[attribute_index]==attribute_value:
-                #print("predict")
                 label=child.predict_label(x)
-        #print("label")
         return label
 
 
@@ -374,13 +346,11 @@ def train_set( data ):
         labels=['yes','no']
     tree=ID3Tree(data,attributes,labels, args.maxDepth, "all","base")
     (rootOfTree, medians, mostCommonValues)=tree.driver_script()
-    #tree.print_tree()
     return (tree, medians, mostCommonValues)
 
 
 #fixes the numerical values in the test set
 def fixNumerical(data, numericalAttributes, medianValues):
-    #import pdb; pdb.set_trace()
     for i in range(len(numericalAttributes)):
         for x in data:
             if x[numericalAttributes[i]]>medianValues[i]:
@@ -392,7 +362,6 @@ def fixNumerical(data, numericalAttributes, medianValues):
 def test_set( data, tree, medians, mostCommonValues):
     correct_predictions=0
     length=len(data)
-    #import pdb; pdb.set_trace()
     if args.bank:
         dataSet='bank'
         numericalAttributes=[0, 5, 9, 11, 12, 13, 14]
