@@ -1,6 +1,5 @@
 #Theresa Sheets
 #TensorFlow Code
-#HW 5
 
 
 import argparse, sys, math, random, numpy as np, tensorflow as tf
@@ -24,7 +23,6 @@ args = parser.parse_args()
 def train_set(data):
     dataUnlabeled=[np.array(x[0:(len(data[0])-1)], ndmin=2) for x in data]
     dataLabels=np.array([x[-1] for x in data])
-    #import pdb; pdb.set_trace()
     width=args.width
     numOutput=2
     epochs=args.T
@@ -86,7 +84,6 @@ def train_set(data):
 
     unlabeledData=np.array(dataUnlabeled)
     labelForData=np.array(dataLabels)
-    #import pdb; pdb.set_trace()
     network.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     network.fit(unlabeledData,labelForData,epochs)
     return network
@@ -111,15 +108,11 @@ def fixData(data):
         label=float(x[-1])
         x[-1]=1
         if label==0:
-            #print('zero')
             x.append(0)
         if label==1:
-            #print('one')
             x.append(1.0)
         for i in range(len(x)-1):
             x[i]=float(x[i])
-        #x[-1]=int(x[-1])
-    #import pdb; pdb.set_trace()
     return data
 
 
