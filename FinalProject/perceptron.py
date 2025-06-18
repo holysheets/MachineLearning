@@ -1,7 +1,4 @@
-#Theresa Sheets Implimentation of the Perceptron ALgorithm
-#CMSC 6350 Final Project
-#May 4, 2019
-
+#Theresa Sheets Implimentation of the Perceptron Algorithm
 
 import argparse, sys, math, random, numpy
 
@@ -32,7 +29,6 @@ def updateWeight(weight,x,r):
     return weight
 
 def train_set(data):
-    #import pdb; pdb.set_trace()
     weight=[0 for x in range(0,len(data[1])-1)]
     C=[]
     weights=[]
@@ -65,9 +61,7 @@ def train_set(data):
                 for j in range(len(a)):
                     a[j]+=weight[j]
 
-                #print(a)
             i+=1
-            #print(i)
         return(a,C)
     else:
         while i<T:
@@ -75,7 +69,6 @@ def train_set(data):
             for x in data:
                 prediction=float(x[-1])*dotProduct(weight, x)
                 if (prediction<=0):
-                    #print("updating weight")
                     weight=updateWeight(weight,x,r)
             i+=1
             print(weight)
@@ -116,12 +109,9 @@ def fixData(data):
         label=float(x[-1])
         x[-1]=1
         if label==0:
-            #print('zero')
             x.append(-1.0)
         if label==1:
-            #print('one')
             x.append(1.0)
-    #import pdb; pdb.set_trace()
     return data
 
 
