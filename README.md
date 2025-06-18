@@ -1,6 +1,6 @@
 # MachineLearningSandbox
 
-This is a machine learning library developed by Theresa Sheets at the University of Utah.
+This is a machine learning library developed by Theresa Sheets at the University of Utah. See the Final Project Folder for code adapted and final writeup of the Cystic Fibrosis work. No datasets are included in this library. 
 
 
 To run id3.py
