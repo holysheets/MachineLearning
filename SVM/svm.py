@@ -1,7 +1,4 @@
 #Theresa Sheets Implimentation of the Perceptron ALgorithm
-#CMSC 6350 HW 4
-#April 5, 2019
-
 
 import argparse, sys, math, random, numpy
 from scipy.optimize import minimize
@@ -29,7 +26,6 @@ def dotProduct(w,x):
 
 
 def train_set_sgd(data):
-    #import pdb; pdb.set_trace()
     weight=[0 for x in range(0,len(data[1])-1)]
     T=args.T
     C=args.C
@@ -49,15 +45,11 @@ def train_set_sgd(data):
             if value<=1:
                 for j in range(len(weight)):
                     weight[j]=(1-rate)*float(weight[j])+rate*C*x[-1]*float(x[j])
-                #print("if")
             else:
-                #print("else")
                 for j in range(len(weight)):
                     weight[j]=(1-rate)*float(weight[j])
             objective.append(loss_f(data,weight,C))
-            #if (1-value)<0:
-            #    value=0
-            #objective.append(0.5*dotProduct(weight, weight)+C*value)
+
             m=m+1
         i=i+1
         #print(objective)
@@ -84,7 +76,6 @@ def train_set_duel(data):
     K_mat=numpy.ndarray([dataLen,dataLen])
     for i in range(dataLen):
         for j in range(dataLen):
-            #import pdb; pdb.set_trace()
             K_mat[i,j]=(data[i][-1])*(data[j][-1])*numpy.inner(data[i][0:sampleLength],data[j][0:sampleLength])
 
 
@@ -107,12 +98,6 @@ def train_set_duel(data):
         return sum(weights)
 
     weight=get_weight(sol.x)
-
-
-
-
-
-
     return weight
 
 
@@ -138,14 +123,11 @@ def fixData(data):
         label=float(x[-1])
         x[-1]=1
         if label==0:
-            #print('zero')
             x.append(-1.0)
         if label==1:
-            #print('one')
             x.append(1.0)
         for i in range(len(x)):
             x[i]=float(x[i])
-    #import pdb; pdb.set_trace()
     return data
 
 
