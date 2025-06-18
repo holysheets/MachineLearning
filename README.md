@@ -1,6 +1,6 @@
 # MachineLearningSandbox
 
-This is a machine learning library developed by Theresa Sheets for CS5350/6350 at the University of Utah.
+This is a machine learning library developed by Theresa Sheets at the University of Utah.
 
 
 To run id3.py
