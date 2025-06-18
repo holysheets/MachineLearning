@@ -1,6 +1,6 @@
 To run ID3:
 you need at least the args for test, train, and maxDepth change the files for test and train, and the depth for max depth as you choose.
-You also need to include —-car or —-bank to specify either the cars or the bank dataset.
+You also need to include —-car or —-bank to specify either the cars or the bank dataset, here we use --CF to specify the Cystic Fibrosis Dataset.
 
 python id3.py --test test.csv —train train.csv -—maxDepth 6 —-CF
 
